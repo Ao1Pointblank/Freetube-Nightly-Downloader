@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#V1.0.0 by Ao1Pointblank and CHatGPT
+#v1.0.0 by Ao1Pointblank and ChatGPT
 
 #dependencies: jq, curl, unzip
 
@@ -24,6 +24,7 @@ show_help() {
   echo "Usage: ./freetube_nightly_download.sh [OPTIONS]"
   echo "Download FreeTube nightly builds from GitHub."
   echo "Dependencies: jq, curl, unzip"
+  echo "You will also need a Github account token with the Repo scope permission. Please visit https://github.com/settings/tokens"
   echo
   echo "Options:"
   echo "  --architecture <arch>  Filter artifacts by architecture (e.g., amd64, arm64, armv7l, mac)"
