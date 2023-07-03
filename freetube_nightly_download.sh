@@ -69,6 +69,11 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
+# Set the output directory to the current working directory if not specified
+if [[ -z "$output_directory" ]]; then
+  output_directory=$(pwd)
+fi
+
 # Fetch the workflow runs for the workflow file
 api_url="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/workflows/$(basename $WORKFLOW_FILE)/runs"
 response=$(curl -s -H "Authorization: token $TOKEN" "$api_url")
