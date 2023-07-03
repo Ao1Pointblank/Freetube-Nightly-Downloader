@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#v1.0.0 by Ao1Pointblank and ChatGPT
+#v1.0.1 by Ao1Pointblank and ChatGPT
 
 #dependencies: jq, curl, unzip
 
@@ -30,8 +30,9 @@ show_help() {
   echo "  --architecture <arch>  Filter artifacts by architecture (e.g., amd64, arm64, armv7l, mac)"
   echo "  --format <format>      Filter artifacts by format (e.g., deb, rpm, appimage, 7z, apk, pacman, dmg, exe)"
   echo "                         Please note that .zip options are not supported due to a limitation of the script and GitHub not showing .zip file endings. Searching for 7z is recommended instead."
-  echo "  --auto-download        Automatically download the artifact if only one result is found. It will not allow the same version to be downloaded again."
+  echo "  --auto-download        Automatically download the artifact if only one result is found. It will not allow the same version to be downloaded again unless --force is used."
   echo "  --output <directory>   Specify the directory where the downloaded file will be saved."
+  echo "  --force                Used in conjunction with --auto-download to force download the artifact, even if the same version has already been downloaded."
   echo "  --help                 Display this help information"
 }
 
@@ -59,6 +60,9 @@ while [[ $# -gt 0 ]]; do
     --output)
       output_directory="$2"
       shift
+      ;;
+    --force)
+      force="true"
       ;;
     *)
       echo "Unknown option: $key"
@@ -106,7 +110,7 @@ if [[ $num_artifacts -eq 1 && "$auto_download" == "true" ]]; then
   # Check if the last downloaded file matches the selected artifact (allowing slight name differences)
   last_downloaded_file=$(cat "$CACHE_FILE")
   selected_file=$(echo "$artifact_names" | sed -n 1p)
-  if [[ -n "$last_downloaded_file" && "$last_downloaded_file" == *"$selected_file"* ]]; then
+  if [[ -n "$last_downloaded_file" && "$last_downloaded_file" == *"$selected_file"* && "$force" != "true" ]]; then
     echo "Artifact already downloaded. Skipping auto-download."
   else
     # Download the artifact
