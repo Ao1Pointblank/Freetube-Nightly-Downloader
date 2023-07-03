@@ -34,7 +34,7 @@ people to start using sudo commands in automation.
   
   
   
-**Integration with Cron/Anacron:**  
+**Optional Integration with Cron/Anacron: (do all this yourself)**  
 I didn't test very much with a user anacrontab, I just went straight to the root anacrontab. This may pose security risks, since it is installing software automatically from a remote source. I encourage users to research ways to add these commands to a user-specific cron.  
 Use at your own risk:  
 
