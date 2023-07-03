@@ -28,6 +28,8 @@ people to start using sudo commands in automation.
                          
 `--auto-download`        Automatically download the artifact if only one result is found. It will not allow the same version to be downloaded again.
 
+`--force`                Prevents --auto-download from blocking the same file from downloading again
+
 `--output <directory>`   Specify the directory where the downloaded file will be saved.
 
 `--help`                 Display this help information  
