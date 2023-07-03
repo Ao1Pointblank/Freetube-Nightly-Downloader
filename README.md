@@ -28,3 +28,21 @@ people to start using sudo commands in automation.
 
 `--help`                 Display this help information  
 
+
+**Integration with Cron/Anacron:**  
+I didn't test very much with a user anacrontab, I just went straight to the root anacrontab. This may pose security risks, since it is installing software automatically from a remote source. I encourage users to research ways to add these commands to a user-specific cron.  
+Use at your own risk:  
+
+```
+/etc/anacrontab: configuration file for anacron
+SHELL=/bin/sh
+HOME=/root
+LOGNAME=root
+
+#my commands
+2 3 pointblank /home/pointblank/.local/bin/freetube_nightly_download.sh --architecture amd64 --format deb --auto-download --output /tmp
+2 4 pointblank sudo dpkg -i /tmp/freetube_*_amd64.deb
+```  
+In the above lines, the first line for each anacrontab command is the frequency of recurrence, in days. The second number is an additional delay in minutes before running the commands. "pointblank" is my username but I'm pretty sure this can be replaced with any single word to help you identify the process being run if it has an error.
+ 
+
