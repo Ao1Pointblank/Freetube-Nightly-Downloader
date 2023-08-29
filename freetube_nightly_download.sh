@@ -18,6 +18,11 @@ REPO_OWNER="FreeTubeApp"
 REPO_NAME="FreeTube"
 WORKFLOW_FILE=".github/workflows/build.yml"
 CACHE_FILE="$HOME/.cache/freetube_last_downloaded.txt"
+LOG_FILE="$HOME/.cache/freetube_download_log.txt"
+
+# Create necessary files automatically
+touch "$CACHE_FILE"
+touch "$LOG_FILE"
 
 # Function to display usage information
 show_help() {
@@ -33,6 +38,7 @@ show_help() {
   echo "  --auto-download        Automatically download the artifact if only one result is found. It will not allow the same version to be downloaded again unless --force is used."
   echo "  --output <directory>   Specify the directory where the downloaded file will be saved."
   echo "  --force                Used in conjunction with --auto-download to force download the artifact, even if the same version has already been downloaded."
+  echo "  --logs				 Print the list of all downloaded files with timestamps"
   echo "  --help                 Display this help information"
 }
 
@@ -40,6 +46,12 @@ show_help() {
 if [[ "$1" == "--help" ]]; then
   show_help
   exit 0
+fi
+
+# Check for --logs command
+if [[ "$1" == "--logs" ]]; then
+	cat "$LOG_FILE"
+    exit 0
 fi
 
 # Parse command line arguments
@@ -130,6 +142,10 @@ if [[ $num_artifacts -eq 1 && "$auto_download" == "true" ]]; then
 
     # Update the cache file with the last downloaded file
     echo "$selected_file" > "$CACHE_FILE"
+
+	  # Add the file name with timestamp to log file
+	  echo $(date +"%D %R - ") "$selected_file" downloaded >> "$LOG_FILE"
+
   fi
 
   exit 0
