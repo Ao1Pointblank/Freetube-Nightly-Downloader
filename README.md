@@ -1,5 +1,5 @@
 # Freetube-Nightly-Downloader
-Bash script to download the latest nightly build of the privacy-friendly Youtube client, FreeTube.
+Bash script to download the latest nightly build of the privacy-friendly Youtube client, [FreeTube](https://github.com/FreeTubeApp/FreeTube).
   
   
   
