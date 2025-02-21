@@ -107,7 +107,7 @@ echo "Latest Run ID: $latest_run_id"
 
 # Fetch the artifacts for the latest run
 artifacts_url="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/actions/runs/$latest_run_id/artifacts"
-artifacts_response=$(curl -s -H "Authorization: token $TOKEN" "$artifacts_url")
+artifacts_response=$(curl -s -H "Authorization: token $TOKEN" "$artifacts_url?per_page=100")
 
 # Extract the artifact names from the response using jq
 artifact_names=$(echo "$artifacts_response" | jq -r '.artifacts[].name')
